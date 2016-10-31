@@ -1,0 +1,7 @@
+# example usage
+
+In your hooks/config-changed for instance you can do:
+
+    use dokuwiki;
+
+If the file `dokuwiki.pm` resides in this directory.

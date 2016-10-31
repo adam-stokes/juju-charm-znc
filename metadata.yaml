@@ -1,0 +1,17 @@
+name: znc
+summary: |
+  ZNC open source IRC Bouncer
+description: |
+  Portable, open source IRC bouncer written in C++. It can be extended using
+  modules written either in C++ or in Perl and Tcl
+maintainers: ['Adam Stokes <adam.stokes@ubuntu.com>']
+series:
+  - xenial
+tags:
+  - irc
+  - bouncer
+resources:
+  bouncer-config:
+    type: file
+    filename: znc.conf
+    description: "Your custom bouncer config"

@@ -1,0 +1,12 @@
+#!/usr/bin/env perl
+BEGIN {
+    system 'sudo apt-get install -qyf cpanminus build-essential libssl-dev libxml2-dev libexpat1-dev conjure-up curl';
+    system "sudo cpanm -n http://cpan.metacpan.org/authors/id/A/AD/ADAMJS/App-CharmKit-2.02.tar.gz";
+}
+
+use charm;
+
+sudo 'cpanm -n Config::Tiny';
+sudo 'sudo add-apt-repository -y ppa:juju/stable';
+sudo 'sudo add-apt-repository -y ppa:conjure-up/daily-git';
+pkg ['conjure-up', 'curl'], ensure => "latest";

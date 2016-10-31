@@ -1,0 +1,12 @@
+#!/usr/bin/env perl
+BEGIN {
+    # Install charmkit
+    system "curl -L https://git.io/vXmxR | sh";
+}
+
+use charm;
+
+pkg ['znc', 'znc-perl', 'znc-tcl', 'znc-python'],
+    ensure => "present";
+
+my $hook_path = $ENV{JUJU_CHARM_DIR};

@@ -1,0 +1,18 @@
+#!/usr/bin/env perl
+
+use charm;
+
+my $unit_name  = $ENV{JUJU_UNIT_NAME};
+
+my $hook = run 'action-get hook';
+my $reportfile = "report-$hook.txt";
+
+run "juju-log Running self-test against $hook charm hook";
+my $output = run "perl -MSmart::Comments ./hooks/$hook";
+if ($? > 0) {
+    run 'action-fail Failed to run self-test';
+}
+
+file $reportfile, content => $output;
+
+run "action-set $hook.report='View the report with: juju run --unit $unit_name \"cat $reportfile\"'";
