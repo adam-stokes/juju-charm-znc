@@ -8,5 +8,3 @@ use charm;
 
 pkg ['znc', 'znc-perl', 'znc-tcl', 'znc-python'],
     ensure => "present";
-
-my $hook_path = $ENV{JUJU_CHARM_DIR};
