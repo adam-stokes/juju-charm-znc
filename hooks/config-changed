@@ -4,28 +4,9 @@ use charm;
 
 status "maintenance", "Configuring ZNC";
 
-my $hook_path = $ENV{JUJU_CHARM_DIR};
+my $version_str = run 'znc --version | grep -P "^ZNC\s"';
+$version_str =~ /^ZNC\s(\d\.\d\.\d.*)\s\-/;
 
-file "/etc/systemd/system/multi-user.target.wants/znc.service",
-  source => "$hook_path/templates/znc.service",
-  owner  => 'root',
-  group  => 'root';
-
-my $znc_conf_resource     = resource 'bouncer-config';
-my $znc_conf_resource_md5 = md5 $znc_conf_resource;
-
-my $current_znc_conf     = '/root/.znc/configs/znc.conf';
-my $current_znc_conf_md5 = md5 $current_znc_conf;
-
-if ($current_znc_conf_md5 ne $znc_conf_resource_md5) {
-    status 'maintenance', "Installing a new znc configuration.";
-    file '/root/.znc/configs/znc.conf',
-      source => "$znc_conf_resource",
-      owner  => "root",
-      group  => "root";
-}
-
-run './hooks/stop';
-run './hooks/start';
+run "application-version-set $1";
 
 status 'active', 'Ready';

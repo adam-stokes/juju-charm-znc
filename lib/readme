@@ -2,6 +2,6 @@
 
 In your hooks/config-changed for instance you can do:
 
-    use dokuwiki;
+    use znc;
 
-If the file `dokuwiki.pm` resides in this directory.
+If the file `znc.pm` resides in this directory.

@@ -1,11 +1,11 @@
 [Unit]
-Description=znc
+Description=znc, and advanced IRC bouncer
+After=network-online.target
 
 [Service]
-Type=forking
-ExecStart=/usr/bin/znc
-ExecStop=/usr/bin/pkill znc
-Restart=always
+ExecStart=/usr/bin/znc -f --datadir=/home/ubuntu/.znc
+User=ubuntu
+Group=ubuntu
 
 [Install]
-WantedBy=default.target
+WantedBy=multi-user.target

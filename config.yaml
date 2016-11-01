@@ -1,1 +1,5 @@
-options: {}
+options:
+  port:
+    type: string
+    default: "8888"
+    description: "port for znc to listen on"

@@ -10,8 +10,3 @@ series:
 tags:
   - irc
   - bouncer
-resources:
-  bouncer-config:
-    type: file
-    filename: znc.conf
-    description: "Your custom bouncer config"
