@@ -5,16 +5,13 @@ use YAML::Tiny;
 use Config::Tiny;
 
 my $status         = run 'juju status --format yaml';
-my $public_address = YAML::Tiny->read_string($status);
+my $public_address = YAML::Tiny->read_string($status)['applications']['znc']['units']['znc/0']['public-address'];
 my $lsb_release    = Config::Tiny->read('/etc/lsb-release');
 
 die "Needs Xenial or later" unless $lsb_release->{_}{DISTRIB_CODENAME} eq "xenial";
 my $juju_version = run 'juju version';
 die "Needs Juju version 2.0" unless $juju_version =~ /^2\.\d/;
 
-run "conjure-up -d ./dokuwiki-spell localhost";
-
-print "Checking if Dokuwiki is reachable and has correct page header\n";
-run "curl --silent $public_address|grep -qP 'start \[Dokuwiki\]'";
+run "conjure-up -d ./znc-spell localhost";
 
 exit 0 unless $? > 0;

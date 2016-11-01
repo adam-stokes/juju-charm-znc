@@ -1,5 +1,0 @@
-series: xenial
-services:
-  dokuwiki:
-    charm: cs:~adam-stokes/dokuwiki
-    num_units: 1

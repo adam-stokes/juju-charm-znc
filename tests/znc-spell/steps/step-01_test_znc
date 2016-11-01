@@ -1,0 +1,12 @@
+#!/usr/bin/env perl
+
+use charm -tester;
+
+my $output = run 'juju run --unit znc/0 "prove hooks/install.t"';
+while ($output =~ /^Result: PASS/gcm) {
+      ok($1, "ZNC is listening on ready to go.");
+      done_testing();
+}
+
+fail("Unable to determine that ZNC was available.");
+done_testing();

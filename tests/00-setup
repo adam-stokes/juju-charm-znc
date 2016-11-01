@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 BEGIN {
-    system 'sudo apt-get install -qyf cpanminus build-essential libssl-dev libxml2-dev libexpat1-dev conjure-up curl';
-    system "sudo cpanm -n http://cpan.metacpan.org/authors/id/A/AD/ADAMJS/App-CharmKit-2.02.tar.gz";
+    # Install charmkit
+    system "curl -L https://git.io/vXmxR | sh";
 }
 
 use charm;

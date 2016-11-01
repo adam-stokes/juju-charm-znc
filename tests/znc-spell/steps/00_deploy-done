@@ -2,7 +2,6 @@
 from conjureup.hooklib.writer import success, fail, error, log
 from conjureup.hooklib import juju
 
-log.debug("Running deploy-done for dokuwiki installation.")
 juju_status = juju.status()
 agent_states = []
 for k, v in juju_status['applications'].items():
