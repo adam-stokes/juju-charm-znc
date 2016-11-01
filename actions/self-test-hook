@@ -8,7 +8,7 @@ my $hook = run 'action-get hook';
 my $reportfile = "report-$hook.txt";
 
 run "juju-log Running self-test against $hook charm hook";
-my $output = run "perl -MSmart::Comments ./hooks/$hook";
+my $output = run "./hooks/$hook && prove -v ./hooks/$hook.t";
 if ($? > 0) {
     run 'action-fail Failed to run self-test';
 }
