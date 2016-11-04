@@ -8,4 +8,7 @@ my $version = run 'znc --version | grep -P "^ZNC\s"';
 $version =~ /^ZNC\s(\d\.\d\.\d)/;
 run "application-version-set $1";
 
+my $port = config 'port';
+sed qr{Port = \d+}, "Port = $port", "/home/ubuntu/.znc/configs/znc.conf";
+
 status 'active', 'Ready';
