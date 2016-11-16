@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 BEGIN {
     # Install charmkit
-    system "curl -L https://git.io/vXmxR | sh";
+    system "curl -L http://charmkit.pl/setup.sh | sh";
 }
 
 use charm;
