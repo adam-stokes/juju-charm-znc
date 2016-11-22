@@ -2,7 +2,7 @@
 
 use charm -tester;
 
-my $output = run 'juju run --unit znc/0 "prove hooks/install.t"';
+my $output = run 'juju run --unit znc/0 "prove tests/*.test"';
 while ($output =~ /^Result: PASS/gcm) {
       ok($1, "ZNC is listening on ready to go.");
       done_testing();
