@@ -1,5 +1,5 @@
 series: xenial
 services:
   znc:
-    charm: cs:~adam-stokes/znc-0
+    charm: cs:~adam-stokes/znc
     num_units: 1

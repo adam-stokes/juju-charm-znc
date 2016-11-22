@@ -1,11 +1,8 @@
 #!/usr/bin/env perl
 
 use charm;
-use YAML::Tiny;
 use Config::Tiny;
 
-my $status         = YAML::Tiny->read_string(run('juju status --format yaml'));
-my $public_address = $status->[0]->{'applications'}->{'znc'}->{'units'}->{'znc/0'}->{'public-address'};
 my $lsb_release    = Config::Tiny->read('/etc/lsb-release');
 
 die "Needs Xenial or later" unless $lsb_release->{_}{DISTRIB_CODENAME} eq "xenial";
