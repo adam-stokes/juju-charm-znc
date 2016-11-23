@@ -11,4 +11,6 @@ run "application-version-set $1";
 my $port = config 'port';
 sed qr{Port = \d+}, "Port = $port", "/home/ubuntu/.znc/configs/znc.conf";
 
+service znc => "restart";
+
 status 'active', 'Ready';
