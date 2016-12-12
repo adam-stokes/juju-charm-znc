@@ -56,7 +56,7 @@ namespace :znc do
 
   desc "Test ZNC Charm"
   task :test do
-    cmd.run './tests/00-run'
+    cmd.run 'bundle exec ./tests/verify'
   end
 end
 
