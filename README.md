@@ -9,7 +9,7 @@ modules written either in C++ or in Perl and Tcl.
 
 ## Set the admin username
 
-    $ juju config dokuwiki admin_user="my_admin"
+    $ juju config znc admin_user="my_admin"
 
 ## Generate a new password for the admin user
 
