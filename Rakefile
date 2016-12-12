@@ -14,7 +14,7 @@ namespace :znc do
     inline_template('znc.service',
                     '/etc/systemd/system/znc.service')
 
-    mkdir_p '/var/lib/znc'
+    mkdir_p '/var/lib/znc/configs'
   end
 
   desc "Configure ZNC"
@@ -29,7 +29,7 @@ namespace :znc do
 
     # Need to parse admin password into proper variables for znc
     admin_password_salt = (0...20).map { ('a'..'z').to_a[rand(26)] }.join
-    admin_password_hash = Digest::SHA256.hexdiget(admin_password + admin_password_salt)
+    admin_password_hash = Digest::SHA256.hexdigest(admin_password + admin_password_salt)
 
     inline_template('znc.conf',
                     '/var/lib/znc/configs/znc.conf',
