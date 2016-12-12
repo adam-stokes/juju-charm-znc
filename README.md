@@ -41,15 +41,14 @@ To learn more visit [Charmkit](https://github.com/charmkit/charmkit).
 ## Testing
 
 The tests cover installation and verification that ZNC is installed and
-running correctly. It'll also excercise the various `juju config` options along
-with automating the login of new user credentials for the admin account.
+running correctly. It'll also excercise the various `juju config` options.
 
 ## Ways to run the tests
 
 ### Use bundletester
 
 ```
-sudo bundletester -F -t cs:~adam-stokes/dokuwiki -l DEBUG -v -r json -o /tmp/results.json
+sudo bundletester -F -t cs:~adam-stokes/znc -l DEBUG -v -r json -o /tmp/results.json
 ```
 
 ### Run tests via Ruby bundler
