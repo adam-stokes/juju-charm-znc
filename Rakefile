@@ -45,7 +45,7 @@ end
 
 __END__
 
-@@znc.service
+@@ znc.service
 [Unit]
 Description=znc, and advanced IRC bouncer
 After=network-online.target
@@ -58,7 +58,7 @@ Group=ubuntu
 [Install]
 WantedBy=multi-user.target
 
-@@znc.conf
+@@ znc.conf
 Version = 1.6.3
 <Listener l>
 	  Port = <%= $port %>
