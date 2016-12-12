@@ -27,6 +27,40 @@ The default port for the admin is **8888** but can be changed with:
 
     juju config znc port=9000
 
+# Developers
+
+This charm uses Rake (a make like utility) for defining hooks and can be seen in
+the **Rakefile**. It also uses a simple library **Charmkit** for providing some
+additional helper methods such as templating.
+
+To learn more visit [Charmkit](https://github.com/charmkit/charmkit).
+
+
+# Maintainers
+
+## Testing
+
+The tests cover installation and verification that ZNC is installed and
+running correctly. It'll also excercise the various `juju config` options along
+with automating the login of new user credentials for the admin account.
+
+## Ways to run the tests
+
+### Use bundletester
+
+```
+sudo bundletester -F -t cs:~adam-stokes/dokuwiki -l DEBUG -v -r json -o /tmp/results.json
+```
+
+### Run tests via Ruby bundler
+
+```
+bundle install --local --with development
+bundle exec rake znc:test
+```
+
+A few package dependencies may be required for testing locally, have a look in **tests/tests.yaml** for those package names.
+
 # Author
 
 Adam Stokes <adam.stokes@ubuntu.com>
