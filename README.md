@@ -7,19 +7,16 @@ modules written either in C++ or in Perl and Tcl.
 
     $ juju deploy cs:~adam-stokes/znc
 
+Before you can make use of your new IRC bouncer you'll need to set the proper
+admin credentials.
+
 ## Set the admin username
 
     $ juju config znc admin_user="my_admin"
 
 ## Generate a new password for the admin user
 
-The easiest way to generate a new password is via the `mkpasswd` command which
-is provided in the `whois` package:
-
-    $ sudo apt install whois
-    $ mkpasswd -m sha-256 my_new_password@@@
-    $5$fY2f3b0F0V$1kNMY3L1ThihvlRkl206Al0X/qtB8O.cYzqwAi7Y4U8
-    $ juju config znc admin_password='$5$fY2f3b0F0V$1kNMY3L1ThihvlRkl206Al0X/qtB8O.cYzqwAi7Y4U8'
+    $ juju config znc admin_password='my_super@secret@password'
 
 # Access webadmin
 

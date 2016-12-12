@@ -27,11 +27,18 @@ namespace :znc do
       exit 0
     end
 
+    # Need to parse admin password into proper variables for znc
+    admin_password_salt = (0...20).map { ('a'..'z').to_a[rand(26)] }.join
+    admin_password_hash = Digest::SHA256.hexdiget(admin_password + admin_password_salt)
+
     inline_template('znc.conf',
                     '/var/lib/znc/configs/znc.conf',
                     port: config('port'),
                     admin_user: config('admin_user'),
-                    admin_password: config('admin_password'))
+                    admin_password: config('admin_password'),
+                    admin_password_salt: admin_password_salt,
+                    admin_password_hash: admin_password_hash)
+
     chown_R "znc", "znc", "/var/lib/znc"
     cmd.run 'systemctl daemon-reload'
     cmd.run 'systemctl restart znc'
@@ -79,7 +86,6 @@ Version = 1.6.3
 LoadModule = webadmin
 
 <User <%= admin_user %>>
-	Pass       = <%= admin_password %>
 	Admin      = true
 	Nick       = <%= admin_user %>
 	AltNick    = <%= admin_user %>_
@@ -87,4 +93,9 @@ LoadModule = webadmin
 	RealName   = ZNC Managed by Juju
 	LoadModule = chansaver
 	LoadModule = controlpanel
+        <Pass <%= admin_password %>>
+          hash = <%= admin_password_hash %>
+          method = sha256
+          salt = <%= admin_password_salt %>
+        </Pass>
 </User>
