@@ -1,7 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    charmkit (0.4.4)
+    charmkit (0.4.8)
       tty-command
     diff-lcs (1.2.5)
     equatable (0.5.0)
@@ -30,7 +30,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  charmkit (= 0.4.4)
+  charmkit (= 0.4.8)
   rake
   rspec
 

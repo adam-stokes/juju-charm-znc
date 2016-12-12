@@ -5,35 +5,45 @@ namespace :znc do
   desc "Install ZNC"
   task :install do
     package ['znc', 'znc-perl', 'znc-tcl', 'znc-python'], :update_cache
-    hook_path = EVN['JUJU_CHARM_DIR']
+    hook_path = ENV['JUJU_CHARM_DIR']
 
+    log "Creating ZNC user"
+    if cmd.run!('useradd --create-home -d /var/lib/znc --system --shell /sbin/nologin --comment "Account to run ZNC daemon" --user-group znc').failure?
+      log "This user already exists, skipping"
+    end
     inline_template('znc.service',
                     '/etc/systemd/system/znc.service')
 
-    mkdir_p '/srv/znc/.znc/configs'
-    inline_template('znc.conf',
-                    '/srv/znc/.znc/configs/znc.conf',
-                    port: config('port'),
-                    admin_user: config('admin_user'),
-                    admin_password: config('admin_password'))
-    cmd.run 'systemctl restart znc'
+    mkdir_p '/var/lib/znc'
   end
 
   desc "Configure ZNC"
   task :config_changed do
-    out, err = run 'znc --version'
-    if match = out.match(/^ZNC\s(\d\.\d\.\d)/i)
-      version = match.captures
-      cmd.run 'application-version-set #{version}'
-    else
-      cmd.run 'application-version-set Unknown'
+
+    admin_user = config 'admin_user'
+    admin_password = config 'admin_password'
+    if (admin_user.nil? or admin_user.empty?) or (admin_password.nil? or admin_password.empty?)
+      status :blocked, "Waiting for an admin username and password to be set, see juju config znc"
+      exit 0
     end
+
     inline_template('znc.conf',
-                    '/srv/znc/.znc/configs/znc.conf',
+                    '/var/lib/znc/configs/znc.conf',
                     port: config('port'),
                     admin_user: config('admin_user'),
                     admin_password: config('admin_password'))
+    chown_R "znc", "znc", "/var/lib/znc"
+    cmd.run 'systemctl daemon-reload'
     cmd.run 'systemctl restart znc'
+
+    out, err = cmd.run 'znc --version'
+    if match = out.match(/^ZNC\s(\d\.\d\.\d)/i)
+      version = match.captures
+      cmd.run "application-version-set #{version}"
+    else
+      cmd.run 'application-version-set Unknown'
+    end
+
     status :active, "ZNC is ready"
   end
 
@@ -51,9 +61,9 @@ Description=znc, and advanced IRC bouncer
 After=network-online.target
 
 [Service]
-ExecStart=/usr/bin/znc -f --datadir=/srv/znc/.znc
-User=ubuntu
-Group=ubuntu
+ExecStart=/usr/bin/znc -f --datadir=/var/lib/znc
+User=znc
+Group=znc
 
 [Install]
 WantedBy=multi-user.target
@@ -61,14 +71,14 @@ WantedBy=multi-user.target
 @@ znc.conf
 Version = 1.6.3
 <Listener l>
-	  Port = <%= $port %>
+	  Port = <%= port %>
           IPv4 = true
           IPv6 = false
           SSL = false
 </Listener>
 LoadModule = webadmin
 
-<User <%= admin_user %>
+<User <%= admin_user %>>
 	Pass       = <%= admin_password %>
 	Admin      = true
 	Nick       = <%= admin_user %>
