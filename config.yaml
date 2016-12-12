@@ -10,4 +10,4 @@ options:
   admin_password:
     type: string
     default: ""
-    description: "Admin password sha256 hash format (see README for using mkpasswd to generate one.)"
+    description: "Admin password"
