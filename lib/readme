@@ -1,7 +1,0 @@
-# example usage
-
-In your hooks/config-changed for instance you can do:
-
-    plugin 'znc';
-
-If the file `znc.pm` resides in this directory.

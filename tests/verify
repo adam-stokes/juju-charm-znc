@@ -1,0 +1,3 @@
+require 'charmkit'
+
+fail "ZNC tests failed" if cmd.run!('juju run --application znc -- "bundle exec rspec --color --format doc"').failure?

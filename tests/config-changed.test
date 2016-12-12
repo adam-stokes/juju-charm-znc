@@ -1,5 +1,0 @@
-#!/usr/bin/env perl
-
-use charm -tester;
-
-done_testing();

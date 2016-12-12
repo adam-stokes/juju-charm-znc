@@ -1,16 +1,3 @@
-#!/usr/bin/env perl
+#!/bin/sh
 
-use charm;
-
-status "maintenance", "Configuring ZNC";
-
-my $version = run 'znc --version | grep -P "^ZNC\s"';
-$version =~ /^ZNC\s(\d\.\d\.\d)/;
-run "application-version-set $1";
-
-my $port = config 'port';
-sed qr{Port = \d+}, "Port = $port", "/home/ubuntu/.znc/configs/znc.conf";
-
-service znc => "restart";
-
-status 'active', 'Ready';
+bundle exec rake znc:config_changed

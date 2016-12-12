@@ -1,6 +1,0 @@
-#!/usr/bin/env perl
-
-use charm;
-
-run "juju-log stopping ZNC";
-service 'znc' => "ensure", "stopped";

@@ -1,6 +1,7 @@
 sources:
   - ppa:juju/stable
-  - ppa:conjure-up/daily-git
-python_packages:
-  - conjure-up
-  - curl
+  - ppa:stub/juju
+packages:
+  - ruby
+  - juju-wait
+tests: "[0-9]*"

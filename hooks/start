@@ -1,6 +1,0 @@
-#!/usr/bin/env perl
-
-use charm;
-
-run "juju-log starting ZNC";
-service 'znc' => "ensure", "started";

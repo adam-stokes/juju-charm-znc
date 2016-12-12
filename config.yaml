@@ -3,3 +3,11 @@ options:
     type: string
     default: "8888"
     description: "port for znc to listen on"
+  admin_user:
+    type: string
+    default: ""
+    description: "Admin username"
+  admin_password:
+    type: string
+    default: ""
+    description: "Admin password sha256 hash format (see README for using mkpasswd to generate one.)"

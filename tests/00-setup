@@ -1,9 +1,0 @@
-#!/usr/bin/env perl
-BEGIN {
-    # Install charmkit
-    system "curl -L http://charmkit.pl/setup.sh | sh";
-}
-
-use charm;
-
-sudo 'cpanm -n Config::Tiny';

@@ -1,0 +1,6 @@
+#!/bin/sh
+juju deploy cs:~adam-stokes/znc
+juju wait
+
+bundle install --local --quiet --with development
+bundle exec ./tests/verify
