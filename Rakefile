@@ -46,7 +46,7 @@ namespace :znc do
     out, err = cmd.run 'znc --version'
     if match = out.match(/^ZNC\s(\d\.\d\.\d)/i)
       version = match.captures
-      cmd.run "application-version-set #{version}"
+      cmd.run "application-version-set #{version.first}"
     else
       cmd.run 'application-version-set Unknown'
     end
