@@ -2,5 +2,8 @@
 juju deploy cs:~adam-stokes/znc
 juju wait
 
+juju config znc admin_user="administrat0r" admin_password="isawsanta"
+juju wait
+
 bundle install --local --quiet --with development
 bundle exec ./tests/verify
