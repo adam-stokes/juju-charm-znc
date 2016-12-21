@@ -5,10 +5,9 @@ namespace :znc do
   desc "Install ZNC"
   task :install do
     package ['znc', 'znc-perl', 'znc-tcl', 'znc-python'], :update_cache
-    hook_path = ENV['JUJU_CHARM_DIR']
 
     log "Creating ZNC user"
-    if cmd.run!('useradd --create-home -d /var/lib/znc --system --shell /sbin/nologin --comment "Account to run ZNC daemon" --user-group znc').failure?
+    if run!('useradd --create-home -d /var/lib/znc --system --shell /sbin/nologin --comment "Account to run ZNC daemon" --user-group znc').failure?
       log "This user already exists, skipping"
     end
     inline_template('znc.service',
@@ -28,27 +27,27 @@ namespace :znc do
     end
 
     # Need to parse admin password into proper variables for znc
-    admin_password_salt = (0...20).map { ('a'..'z').to_a[rand(26)] }.join
+    admin_password_salt = gen_salt
     admin_password_hash = Digest::SHA256.hexdigest(admin_password + admin_password_salt)
 
-    inline_template('znc.conf',
+    inline_template 'znc.conf',
                     '/var/lib/znc/configs/znc.conf',
                     port: config('port'),
                     admin_user: config('admin_user'),
                     admin_password: config('admin_password'),
                     admin_password_salt: admin_password_salt,
-                    admin_password_hash: admin_password_hash)
+                    admin_password_hash: admin_password_hash
 
     chown_R "znc", "znc", "/var/lib/znc"
-    cmd.run 'systemctl daemon-reload'
-    cmd.run 'systemctl restart znc'
+    run 'systemctl daemon-reload'
+    run 'systemctl restart znc'
 
-    out, err = cmd.run 'znc --version'
+    out, err = run 'znc --version'
     if match = out.match(/^ZNC\s(\d\.\d\.\d)/i)
       version = match.captures
-      cmd.run "application-version-set #{version.first}"
+      run "application-version-set #{version.first}"
     else
-      cmd.run 'application-version-set Unknown'
+      run 'application-version-set Unknown'
     end
 
     status :active, "ZNC is ready"
@@ -56,7 +55,7 @@ namespace :znc do
 
   desc "Test ZNC Charm"
   task :test do
-    cmd.run 'bundle exec ./tests/verify'
+    run 'bundle exec ./tests/verify'
   end
 end
 

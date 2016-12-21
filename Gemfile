@@ -3,4 +3,4 @@ source "https://rubygems.org"
 
 gem "rake"
 gem "rspec"
-gem "charmkit", "= 0.4.8"
+gem "charmkit", "= 0.5.1"
