@@ -3,5 +3,6 @@ sources:
   - ppa:stub/juju
 packages:
   - ruby
+  - bundler
   - juju-wait
 tests: "[0-9]*"
