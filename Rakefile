@@ -50,6 +50,8 @@ namespace :znc do
       run 'application-version-set Unknown'
     end
 
+    run "open-port #{config('port')}"
+
     status :active, "ZNC is ready"
   end
 
